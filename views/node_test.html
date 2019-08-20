@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Test Page for nodejs-ex app</title>
+  <script src="scripts/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="styles/ui.css"/>
+
+  <script>
+    function dataFill()
+    {
+      $.ajax({url: "envs", success: function( result ) {
+        $("#requestStatus").html(result);
+      }});
+    }
+
+    function jsonCall()
+    {
+      $.ajax({url:"nasa", success: function(result) {
+        $("#jsonoutput").html(result);
+      }});
+    }
+
+    function reveal( targetName )
+    {
+      target = document.getElementById(targetName);
+
+      target.style.display = ( target.style.display == "block" ? "none" : "block" );
+
+      buttonLabel = document.getElementById("hider").value;
+      document.getElementById("hider").value = ( document.getElementById("hider").value == "Reveal" ? "Hide" : "Reveal");
+    }
+
+  </script>
+
+</head>
+
+<body onload="dataFill();">
+<div width="100%" align="right"><img src="/images/redhat.png" width="200px"/></div>
+<b>Test page for nodejs-ex</b><br/>
+Served from res.render (listening on /).<br/>
+<hr width="100%"/>
+<input type="button" id="hider" value="Reveal" onClick="reveal('requestStatus');"/>
+<div class="submission" id="requestStatus" style="display:none">
+&nbsp;
+</div><br/>
+<hr width="100%"/>
+<input type="button" value="JSON TEST" onClick="jsonCall();"/>
+<div class="submission" id="jsonoutput">
+&nbsp;
+</div><br/>
+<hr width="100%"/>
+<div class="information">
+This is a simple webpage rendered from the node.js application at the root endpoint.<br/>
+</div>
+
+</body>
+</html>
