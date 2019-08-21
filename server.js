@@ -6,6 +6,10 @@ var eps     = require('ejs');
 var got     = require('got');
 var mysql   = require('mysql');
 var http   = require('http');
+var convert = require('xml-js');
+
+const bbcfeed = "http://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+const skyfeed = "http://feeds.skynews.com/feeds/rss/uk.xml";
 
 app.engine('html', require('ejs').renderFile);
 
@@ -32,7 +36,7 @@ app.get('/', function (req, res)
 app.get( '/skynews', function (req,res)
 {
   let data = ''; 
-  http.get('http://feeds.skynews.com/feeds/rss/uk.xml', (resp) => {
+  http.get(skyfeed, (resp) => {
     // Read handler
     resp.on('data', (chunk) => {
       data += chunk;
@@ -42,7 +46,10 @@ app.get( '/skynews', function (req,res)
     resp.on('end', () => {
       console.log( data );
 
-      res.send( data );
+      // Convert to JSON
+      jsonData = convert.xml2json(data, {compact: false, spaces: 2});
+
+      res.send( jsonData );
     });
   }).on('error', (err) => {
     console.log("Error occurred " + err.message);
