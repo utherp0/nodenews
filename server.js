@@ -29,7 +29,7 @@ var dbpassword = process.env.DBPASSWORD;
 app.get('/', function (req, res)
 {
   console.log( "Request received....");
-  console.log("Demo time");
+  console.log("Demo time - nodenews");
   res.render('nodenews.html');
 });
 
