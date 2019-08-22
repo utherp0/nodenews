@@ -30,7 +30,7 @@ app.get('/', function (req, res)
 {
   console.log( "Request received....");
   console.log("Demo time");
-  res.render('node_test.html');
+  res.render('nodenews.html');
 });
 
 app.get( '/skynews', function (req,res)
