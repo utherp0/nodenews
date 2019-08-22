@@ -49,7 +49,21 @@ app.get( '/skynews', function (req,res)
       // Convert to JSON
       jsonData = convert.xml2json(data, {compact: false, spaces: 2});
 
-      res.send( jsonData );
+      // Parse the JSON
+      feedData = JSON.parse(jsonData);
+
+      items = getSkyItems(feedData);
+      console.log( "Found " + items.length + " items...");
+
+      var returnData = "";
+      for( loop=0;loop<items.length;loop++ )
+      {
+        item = items[loop];
+        formattedDate = new Date(item.datestamp);
+        returnData += "<b>" + formattedDate + "</b><br/><i>" + item.title + "</i> <a href=\"" + item.link + "\">Click here</a><br/>"; 
+      }
+
+      res.send( returnData );
     });
   }).on('error', (err) => {
     console.log("Error occurred " + err.message);
@@ -216,3 +230,63 @@ function getEnv()
 
   return envNames;
 }
+
+// Parsers
+function getSkyItems( jsondata )
+{
+  console.log( jsondata);
+  var items = [];
+  var elements = jsondata.elements;
+
+  for(loop=0;loop<elements[0].elements[0].elements.length;loop++)
+  {
+    var target = elements[0].elements[0].elements[loop];
+  
+    switch(elements[0].elements[0].elements[loop].name)
+    {
+      case 'item': 
+
+      var title="";
+        var link="";
+        var pubDate="";
+  
+        for(itemLoop=0;itemLoop<target.elements.length;itemLoop++)
+        {
+          var item = target.elements[itemLoop];
+          switch(item.name)
+          {
+            case 'title':
+            title = item.elements[0].text;
+            break;
+  
+            case 'pubDate':
+            pubDate = item.elements[0].text;
+            break;
+  
+            case 'link':
+            link = item.elements[0].text;
+            break;
+          }
+        }
+  
+        var timestamp = new Date(pubDate);
+
+        var item = new Item( title, link, timestamp.getTime());
+        items.push(item);
+
+        break;
+    }
+  }
+  
+  return items;
+}
+
+// Data objects
+function Item( title, link, datestamp )
+{
+  this.title = title;
+  this.link = link;
+  this.datestamp = datestamp;
+}
+
+
