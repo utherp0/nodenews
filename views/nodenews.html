@@ -12,6 +12,13 @@
       }});
     }
 
+    function skyDataLoad()
+    {
+      $.ajax({url:"skynews", success: function(result){
+        $("#skyfeed").html(result);
+      }});
+    }
+
     function jsonCall()
     {
       $.ajax({url:"nasa", success: function(result) {
@@ -45,9 +52,9 @@
 <body onload="dataFill();">
 <div width="100%" align="right"><img src="/images/redhat.png" width="200px"/></div>
 <b>Test page for Nodenews (is Good News)</b><br/>
-<input type="button" id="refresh" onClick="skyDataLoad();"/>
+<input type="button" id="refresh" value="Refresh SKY Feed" onClick="skyDataLoad();"/>
 
-<div class="scroller" width="98%" height>
+<div class="scroller" width="98%" height="200px" id="skyfeed">
 
 </div>
 
