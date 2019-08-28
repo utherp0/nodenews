@@ -1,6 +1,6 @@
 let jsonData = require('./data/test.json');
 
-console.log(jsonData);
+//console.log(jsonData);
 //console.log(jsonData.elements);
 
 var elements = jsonData.elements;

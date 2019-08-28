@@ -54,6 +54,7 @@ app.get( '/skynews', function (req,res)
 
       items = getSkyItems(feedData);
       console.log( "Found " + items.length + " items...");
+      console.log( itemsToJSON(items));
 
       var returnData = "";
       for( loop=0;loop<items.length;loop++ )
@@ -289,4 +290,23 @@ function Item( title, link, datestamp )
   this.datestamp = datestamp;
 }
 
+function itemsToJSON( items )
+{
+  workingJSON = "{[";
 
+  items.foreach( exportJSON );
+  
+  function exportJSON(item)
+  {
+    if( !workingJSON == "{[")
+    {
+      workingJSON += ",";
+    }
+
+    workingJSON += "{\"title:" + item.title + "\",link:\"" + item.link + "\",datestamp:" + item.datastamp + "}";
+  }
+
+  workingJSON += "]}";
+
+  return workingJSON;
+}
