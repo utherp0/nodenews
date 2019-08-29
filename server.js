@@ -33,6 +33,31 @@ app.get('/', function (req, res)
   res.render('nodenews.html');
 });
 
+app.get('/skyjson', function(req,res){
+  let data = ''; 
+  http.get(skyfeed, (resp) => {
+    // Read handler
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    // Completion handler
+    resp.on('end', () => {
+      console.log( data );
+
+      // Convert to JSON
+      jsonData = convert.xml2json(data, {compact: false, spaces: 2});
+
+      // Parse the JSON
+      feedData = JSON.parse(jsonData);
+
+      items = getSkyItems(feedData);
+
+      res.send(itemsToJSON( items ));
+    });
+  });
+});
+
 app.get( '/skynews', function (req,res)
 {
   let data = ''; 
@@ -293,17 +318,20 @@ function Item( title, link, datestamp )
 function itemsToJSON( items )
 {
   workingJSON = "{[";
+  firstPass = true;
 
-  items.foreach( exportJSON );
+  items.forEach( exportJSON );
   
   function exportJSON(item)
   {
-    if( !workingJSON == "{[")
+    if( !firstPass)
     {
       workingJSON += ",";
     }
 
-    workingJSON += "{\"title:" + item.title + "\",link:\"" + item.link + "\",datestamp:" + item.datastamp + "}";
+    firstPass = false;
+
+    workingJSON += "{\"title:\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
   }
 
   workingJSON += "]}";

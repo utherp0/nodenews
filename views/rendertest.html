@@ -1,0 +1,62 @@
+<html>
+<head>
+  <title>Nodenews is Good News</title>
+  <script src="scripts/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="styles/ui.css"/>
+
+  <script>
+    function dataFill()
+    {
+      $.ajax({url: "envs", success: function( result ) {
+        $("#requestStatus").html(result);
+      }});
+    }
+
+    function skyDataLoad()
+    {
+      $.ajax({url:"skynews", success: function(result){
+        $("#skyfeed").html(result);
+      }});
+    }
+
+    function jsonCall()
+    {
+      $.ajax({url:"nasa", success: function(result) {
+        $("#jsonoutput").html(result);
+      }});
+    }
+
+    function reveal( targetName )
+    {
+      target = document.getElementById(targetName);
+
+      target.style.display = ( target.style.display == "block" ? "none" : "block" );
+
+      buttonLabel = document.getElementById("hider").value;
+      document.getElementById("hider").value = ( document.getElementById("hider").value == "Reveal" ? "Hide" : "Reveal");
+    }
+
+  </script>
+   
+  <style>
+    div.scroller 
+    {
+      background-color: lightblue;
+      height: 200px;
+      overflow: scroll;
+    }
+}
+  </style>
+</head>
+
+<body onload="dataFill();">
+<div width="100%" align="right"><img src="/images/redhat.png" width="200px"/></div>
+<b>Test page for Nodenews (is Good News)</b><br/>
+<input type="button" id="refresh" value="Refresh SKY Feed" onClick="skyDataLoad();"/>
+
+<div class="scroller" width="98%" height="200px" id="skyfeed">
+
+</div>
+
+</body>
+</html>
