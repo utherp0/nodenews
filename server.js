@@ -333,7 +333,7 @@ function itemsToJSON( items )
 
     console.log("Adding item : " + item.title);
 
-    workingJSON += "{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
+    workingJSON += "\"items\":{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
   }
 
   workingJSON += "]}";
