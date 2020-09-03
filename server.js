@@ -319,6 +319,7 @@ function itemsToJSON( items )
 {
   workingJSON = "{[";
   firstPass = true;
+  firstLine = true;
 
   items.forEach( exportJSON );
   
@@ -333,7 +334,11 @@ function itemsToJSON( items )
 
     console.log("Adding item : " + item.title);
 
-    workingJSON += "\"items\":{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
+    if (firstLine) {
+      workingJSON += "\"items\":";
+      firstLine = false;
+    }
+    workingJSON += "{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
   }
 
   workingJSON += "]}";
