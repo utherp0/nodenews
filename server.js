@@ -317,7 +317,7 @@ function Item( title, link, datestamp )
 
 function itemsToJSON( items )
 {
-  workingJSON = "{[";
+  workingJSON = "{";
   firstPass = true;
   firstLine = true;
 
@@ -335,7 +335,7 @@ function itemsToJSON( items )
     console.log("Adding item : " + item.title);
 
     if (firstLine) {
-      workingJSON += "\"items\":";
+      workingJSON += "\"items\":[";
       firstLine = false;
     }
     workingJSON += "{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
