@@ -331,7 +331,7 @@ function itemsToJSON( items )
 
     firstPass = false;
 
-    workingJSON += "{\"title:\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
+    workingJSON += "{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
   }
 
   workingJSON += "]}";
