@@ -331,6 +331,8 @@ function itemsToJSON( items )
 
     firstPass = false;
 
+    console.log("Adding item : " + item.title);
+
     workingJSON += "{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
   }
 
