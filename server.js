@@ -317,8 +317,9 @@ function Item( title, link, datestamp )
 
 function itemsToJSON( items )
 {
-  workingJSON = "{[";
+  workingJSON = "{";
   firstPass = true;
+  firstLine = true;
 
   items.forEach( exportJSON );
   
@@ -331,7 +332,13 @@ function itemsToJSON( items )
 
     firstPass = false;
 
-    workingJSON += "{\"title:\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
+    console.log("Adding item : " + item.title);
+
+    if (firstLine) {
+      workingJSON += "\"items\":[";
+      firstLine = false;
+    }
+    workingJSON += "{\"title\":\"" + item.title + "\",\"link\":\"" + item.link + "\",\"datestamp\":" + item.datestamp + "}";
   }
 
   workingJSON += "]}";
